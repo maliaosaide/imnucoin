@@ -1,0 +1,22 @@
+[Unit]
+Description=Imnucoin's distributed currency daemon
+After=network.target
+
+[Service]
+User=imnucoin
+Group=imnucoin
+
+Type=forking
+PIDFile=/var/lib/imnucoind/imnucoind.pid
+ExecStart=/usr/bin/imnucoind -daemon -pid=/var/lib/imnucoind/imnucoind.pid \
+-conf=/etc/imnucoin/imnucoin.conf -datadir=/var/lib/imnucoind -disablewallet
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,27 @@
+# /etc/conf.d/imnucoind: config file for /etc/init.d/imnucoind
+
+# Config file location
+#IMNUCOIND_CONFIGFILE="/etc/imnucoin/imnucoin.conf"
+
+# What directory to write pidfile to?  (created and owned by $IMNUCOIND_USER)
+#IMNUCOIND_PIDDIR="/var/run/imnucoind"
+
+# What filename to give the pidfile
+#IMNUCOIND_PIDFILE="${IMNUCOIND_PIDDIR}/imnucoind.pid"
+
+# Where to write imnucoind data (be mindful that the blockchain is large)
+#IMNUCOIND_DATADIR="/var/lib/imnucoind"
+
+# User and group to own imnucoind process
+#IMNUCOIND_USER="imnucoin"
+#IMNUCOIND_GROUP="imnucoin"
+
+# Path to imnucoind executable
+#IMNUCOIND_BIN="/usr/bin/imnucoind"
+
+# Nice value to run imnucoind under
+#IMNUCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+IMNUCOIND_OPTS="-disablewallet"
+

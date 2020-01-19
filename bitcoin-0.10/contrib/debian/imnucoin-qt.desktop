@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Imnucoin
+Comment=Imnucoin P2P Cryptocurrency
+Comment[fr]=Imnucoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Imnucoin, eşten eşe kriptografik sanal para birimi
+Exec=imnucoin-qt %u
+Terminal=false
+Type=Application
+Icon=imnucoin128
+MimeType=x-scheme-handler/imnucoin;
+Categories=Office;Finance;

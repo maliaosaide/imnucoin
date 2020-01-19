@@ -1,0 +1,6 @@
+usr/local/bin/imnucoin-qt usr/bin
+share/pixmaps/imnucoin32.xpm usr/share/pixmaps
+share/pixmaps/imnucoin16.xpm usr/share/pixmaps
+share/pixmaps/imnucoin128.png usr/share/pixmaps
+debian/imnucoin-qt.desktop usr/share/applications
+debian/imnucoin-qt.protocol usr/share/kde4/services/

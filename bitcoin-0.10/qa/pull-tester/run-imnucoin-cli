@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# This is a thin wrapper around imnucoin-cli that strips the Windows-style EOLs
+# from the output if present. It is necessary when using imnucoin-cli.exe on
+# Linux since shells will interpret the line-endings as part of the result.
+
+CURDIR=$(cd $(dirname "$0"); pwd)
+# Get BUILDDIR and REAL_IMNUCOIND
+
+# Grab the value of $REAL_IMNUCOINCLI which may be imnucoin-cli.exe.
+. "${CURDIR}/tests-config.sh"
+
+"${REAL_IMNUCOINCLI}" "$@" | sed 's/\r//'

@@ -1,0 +1,5 @@
+Building Imnucoin
+
+See doc/build-*.md for instructions on building imnucoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of Imnucoin.

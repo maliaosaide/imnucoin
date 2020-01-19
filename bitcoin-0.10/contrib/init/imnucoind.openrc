@@ -1,0 +1,86 @@
+#!/sbin/runscript
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/imnucoin/.imnucoin" ]; then
+	IMNUCOIND_DEFAULT_DATADIR="/var/lib/imnucoin/.imnucoin"
+else
+	IMNUCOIND_DEFAULT_DATADIR="/var/lib/imnucoind"
+fi
+
+IMNUCOIND_CONFIGFILE=${IMNUCOIND_CONFIGFILE:-/etc/imnucoin/imnucoin.conf}
+IMNUCOIND_PIDDIR=${IMNUCOIND_PIDDIR:-/var/run/imnucoind}
+IMNUCOIND_PIDFILE=${IMNUCOIND_PIDFILE:-${IMNUCOIND_PIDDIR}/imnucoind.pid}
+IMNUCOIND_DATADIR=${IMNUCOIND_DATADIR:-${IMNUCOIND_DEFAULT_DATADIR}}
+IMNUCOIND_USER=${IMNUCOIND_USER:-imnucoin}
+IMNUCOIND_GROUP=${IMNUCOIND_GROUP:-imnucoin}
+IMNUCOIND_BIN=${IMNUCOIND_BIN:-/usr/bin/imnucoind}
+
+name="Imnucoin Core Daemon"
+description="Imnucoin crypto-currency p2p network daemon"
+
+command="/usr/bin/imnucoind"
+command_args="-pid=\"${IMNUCOIND_PIDFILE}\" \
+		-conf=\"${IMNUCOIND_CONFIGFILE}\" \
+		-datadir=\"${IMNUCOIND_DATADIR}\" \
+		-daemon \
+		${IMNUCOIND_OPTS}"
+
+required_files="${IMNUCOIND_CONFIGFILE}"
+start_stop_daemon_args="-u ${IMNUCOIND_USER} \
+			-N ${IMNUCOIND_NICE:-0} -w 2000"
+pidfile="${IMNUCOIND_PIDFILE}"
+retry=60
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${IMNUCOIND_USER}:${IMNUCOIND_GROUP}" \
+	"${IMNUCOIND_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${IMNUCOIND_USER}:${IMNUCOIND_GROUP}" \
+	"${IMNUCOIND_PIDDIR}"
+
+	checkpath -f \
+	-o ${IMNUCOIND_USER}:${IMNUCOIND_GROUP} \
+	-m 0660 \
+	${IMNUCOIND_CONFIGFILE}
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if ! grep -qs '^rpcpassword=' "${IMNUCOIND_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run imnucoind."
+		eerror "The setting must appear in ${IMNUCOIND_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following"
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is also recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Imnucoin Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}
