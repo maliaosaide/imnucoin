@@ -34,3 +34,13 @@
 >> https://blog.csdn.net/BaoBeiDeXiaoDaiGua/article/details/79057759
 >> https://blog.csdn.net/BaoBeiDeXiaoDaiGua/article/details/79058268
 >> https://blog.csdn.net/baobeidexiaodaigua/article/details/79058332
+
+## 资源
+
+总大小大约在4T左右
+链接: https://pan.baidu.com/s/1322Pp8UlkDC-28Qxs6OTEQ 提取码: 9epw
+
+win10 此虚拟机集成大部分的环境，1T大小，打开需要64G内存和SSD级别的读写速度
+Ubuntu19.10AI  集成深度学习环境
+Ubuntu for teaching 集成mini AlphaGo
+区块链的授课资料主要在day1~6 的压缩包里面
